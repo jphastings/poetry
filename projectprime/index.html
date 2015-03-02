@@ -1,0 +1,131 @@
+<html>
+<head>
+	<title>Project Prime - The Conclusion</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-language" content="en" />
+	<meta name="title" content="Project Prime" />
+	<meta name="description" content=" A collaborative art project, based on people's opinions of poetry by me, Cy Densham." />
+	<link rel="image_src" href="http://poetry.byJP.me/projectprime/prime.png" />
+	<link rel="stylesheet" rev="stylesheet" href="quizical.css" media="screen">
+	<link rel="stylesheet" rev="stylesheet" href="thepiece.css" media="screen">
+	<style>
+	#flattr {
+		position:fixed;
+		bottom:0px;
+		right: 0px;
+	}
+	</style>
+	<script type="text/javascript" src="mootools.js"></script>
+	<script type="text/javascript" src="mootools-more.js"></script>
+	<script>
+	var currchosen = 0;
+	
+	function choose(chosen) {
+		if (currchosen != 0) {
+			$('sv').getSVGDocument().getElementById('cell-'+currchosen).setAttribute("stroke-width","1")
+		}
+		var cell = $('sv').getSVGDocument().getElementById('cell-'+chosen)
+		cell.setAttribute("stroke-width","4")
+		cell.parentNode.appendChild( cell );
+		
+		currchosen = chosen;
+	}
+	
+	function addComment(details) {
+		choose(details['number']);
+		var colour = 'rgb('+Math.round(details['colour'][0]*255)+','+Math.round(details['colour'][1]*255)+','+Math.round(details['colour'][2]*255)+')';
+		fxnumber.start('background-color',colour);
+		$('number').fade('out');
+		a.start('left',(1 - details['alpha']) * 47 + 1)
+		r.start('left',(1 - details['colour'][0]) * 47 + 1)
+		g.start('left',(1 - details['colour'][1]) * 47 + 1)
+		b.start('left',(1 - details['colour'][2]) * 47 + 1)
+		fxcomment.start(1,0).chain(
+			function() {
+				$('number').set('text',details['number'])
+				if (details['comment'] === '') {
+					$('comment').set('html','<em>No comment</em>')
+				} else {
+					$('comment').set('text',details['comment'])
+				}
+				$('age').set('html','This artist is <strong>'+Math.floor(details['years'])+'</strong> years old')
+				$('completed').set('html','<small>and contributed on '+details['completed']+'</small>')
+				this.start(0,1)
+				$('number').fade('in');
+			}
+		)
+	}
+	
+	var fxcomment;
+	var fxnumber;
+	var a;
+	var r;
+	var g;
+	var b;
+	
+	window.addEvent('domready', function(){
+		fxnumber = new Fx.Tween($('numberbox'),{duration:'long'});
+		a = new Fx.Tween($('a'),{duration:'long'});
+		r = new Fx.Tween($('r'),{duration:'long'});
+		g = new Fx.Tween($('g'),{duration:'long'});
+		b = new Fx.Tween($('b'),{duration:'long'});
+		fxcomment = new Fx.Tween($('info'),{duration:'long',property: 'opacity'})
+		$('go').addEvent('click',function() {
+			this.removeEvent('click')
+			new Fx.Slide('describe').slideOut('vertical').chain(function() {
+				$('comments').fade('in')
+				begin()
+			})
+		})
+	})
+	
+	function begin() {
+		var getComments = new Request({
+			method: 'get',
+			url: 'query.php',
+			initialDelay:100,
+			delay:10000,
+			onSuccess:function(response) {
+				addComment(JSON.decode(response))
+			}
+		}).startTimer();
+	}
+	var flattr_url = 'http://poetry.byjp.me/projectprime/';
+	
+	</script>
+</head>
+<body>
+	<div id="content">
+		<h1>Project Prime</h1>
+		<h2>The Conclusion</h2>
+		<embed class="svgex" src="prime.svg" type="image/svg+xml" frameborder="no" align="middle" width="860" height="500" id="sv"/>
+		<div id="describe">
+			<p>Project Prime is a collaborative artwork, initiated by <a href="http://twitter.com/CyDensham" target="twitter">Cy Densham</a> based on four of his <a href="http://poetry.byJP.me" target="poetry">poems</a>, Chapters <a href="http://poetry.byjp.me/poem:chapteri" target="poetry">I</a>, <a href="http://poetry.byjp.me/poem:chapterii" target="poetry">II</a>, <a href="http://poetry.byjp.me/poem:chapteriii" target="poetry">III</a> and <a href="http://poetry.byjp.me/poem:chapteriv" target="poetry">IV</a>.</p>
+			<p>Though they are, perhaps, uninspiring names they were chosen to allow readers (in particular the collaborative artists involved with this work) to form their own interpretations and impressions of the short collections of words within. Over the course of several weeks <strong>44</strong> people submitted a little information about themselves and their impressions of each of the pieces.</p>
+			<p>Each person is represented in the artwork below by a coloured shape. Each shape's centre is placed on the canvas according to their age, with older people towards the right, younger to the left, the first people to collaborate nearer the bottom and the last nearer the top. The colour of the shape shows their preference towards each poem - the stronger the primary colour the more they liked that poem; red for Chapter II, green for Chapter III and blue for Chapter IV. Chapter I has is preference shown by transparency, the faster a shape pulses the more it was liked by the person it represents.</p>
+			
+			<p>If you enjoy our work, share it and by all means contact me directly <a href="http://twitter.com/CyDensham" target="twitter">on twitter</a>, I'll be sure to 'retweet' your thoughts to anyone following me.</a></p>
+			
+			<a href="#" id="go" title="Show some collaborator information" style="display:block; width:100%;text-align:center">Click here to find out a little about the collaborators</a>
+		</div>
+		<div id="comments" style="visibility:hidden">
+			<div id="numberbox">
+				<div id="numbercont"><div id="number"></div></div>
+				<div id="a"></div>
+				<div id="r"></div>
+				<div id="g"></div>
+				<div id="b"></div>
+			</div>
+			<div id="info">
+				<div id="comment"></div>
+				<div id="age"></div>
+				<div id="completed"></div>
+			</div>
+		</div>
+	</div>
+	<div id="share">
+		<a name="fb_share" type="box_count" share_url="http://poetry.byJP.me/projectprime/" href="http://www.facebook.com/sharer.php">Share</a>
+		<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+	<title>helix</title>
+	<script src="mootools.core.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	var flattr_url = 'http://poetry.byJP.me/helix';
+	function rotate() {
+		if ($('input').get('value').test(/^[0-8]?\d$|^9[0-8]$/)) {
+			var next = $('input').get('value').toInt() + 1
+		} else {
+			var next = 0;
+		}
+		new Fx.Tween($('input')).start('color',"#555555","#ffffff")
+		$('input').set('value',next)
+		new Fx.Tween($('input')).start('color',"#ffffff","#555555")
+		$('input').fireEvent('keyup')
+		
+	}
+	var interval;
+	var timeout;
+		
+	window.addEvent('domready', function() {
+		$('input').addEvent('keydown',function(m) {
+			if ((m.key.test(/\D/) && !m.key.test('backspace')) || ($('input').get('value')+m.key).toInt() > 99) {
+				m.stop()
+			}
+		})
+	
+		$('input').addEvent('focus',function() {
+			clearInterval(interval);
+			clearTimeout(timeout);
+		})
+		
+		$('input').addEvent('blur',function() {
+			if ($('input').get('value') == '') {
+				$('input').setStyle('color',"#ffffff")
+				$('input').set('value',"helix") 
+				new Fx.Tween($('input')).start('color',"#555555")
+			}
+			clearInterval(interval);
+			clearTimeout(timeout);
+			timeout = setTimeout('interval = setInterval(\'rotate()\',6000);',1000);
+		})
+		$('input').addEvent('keyup', function() {
+			var theClass = 'helix_'+this.get('value')
+			var amt;
+			$$('#helix span').each(function(el){
+				if (el.hasClass(theClass)) {
+					amt = "#000000";
+				} else {
+					amt = "#d4d4d4";
+				}
+				new Fx.Tween(el).start('color',amt)
+			})
+		})
+		$('input').addEvent('mousedown', function() {
+			$$('#helix span').each(function(el){
+				new Fx.Tween(el).start('color',"#999999")
+			})
+			this.set('value','')
+		})
+		
+		setInterval('goFromHash()',1000);
+		
+	});
+	
+	function goFromHash() {
+		var start = document.location.href.replace(/.*#(\d{1,2})$/,'$1')
+		if (start != document.location.href) {
+			$('input').set('value',start)
+			$('input').fireEvent('keyup')
+			clearTimeout(timeout);
+		}
+	}
+	
+	timeout = setTimeout('interval = setInterval(\'rotate()\',12000);',15000);
+	
+	</script>
+	<style>
+	body {
+		margin:40px 0;
+		text-align:center;
+	}
+	
+	#notice {
+			text-align:center;
+			font-size:11px;
+			font-style:italic;
+			font-family:tahoma;
+			color:#999;
+			display:none;	}
+	
+	#helix {
+		width:310px;
+		text-align:justify;
+		margin-left:auto;
+		margin-right:auto;
+		font-size: 16px;
+		font-family:'georgia';
+		color:#999999;
+	}
+	
+	input {
+		display:block;
+		width:100%;
+		border:1px solid #d4d4d4;
+		padding:2px;
+		text-align:center;
+		font-size:25px;
+		color:#555555;
+		margin-bottom:15px;
+	}
+	
+	input:hover {
+		border: 1px solid #000000;
+	}
+	
+	#cy {
+		text-align:center;
+		display:block;
+		color:#ccc;
+		font-size:0.8em;
+		text-decoration:none;
+		margin-top:25px;
+	}
+	#cy:hover {
+		color: #000;
+		text-decoration:underline;
+	}
+	
+	#licence {
+		position:fixed;
+		bottom:2px;
+		text-align:center;
+		width:100%;
+	}
+	
+/*	#flattr {
+		position:fixed;
+		bottom:0px;
+		right: 0px;
+	}*/
+	</style>
+</head>
+<body>
+
+<div id="helix">
+	<input type="text" id="input" value="helix" />
+	<span class="helix_2 helix_88">i'm</span> 
+	<span class="helix_17 helix_76 helix_38">(</span> 
+	<span class="helix_2 helix_51">confused</span> 
+	<span class="helix_3 helix_5 helix_11 helix_13 helix_19 helix_37 helix_59 helix_71 helix_89 helix_72 helix_52">i</span> 
+	<span class="helix_37 helix_71 helix_96 helix_49">love</span> 
+	<span class="helix_5 helix_59 helix_27 helix_22">have</span> 
+	<span class="helix_2 helix_44 helix_68 helix_81">by</span> 
+	<span class="helix_41 helix_21">you're</span> 
+	<span class="helix_2 helix_94">the</span> 
+	<span class="helix_13 helix_46 helix_30 helix_26">get</span> 
+	<span class="helix_59 helix_0">a</span> 
+	<span class="helix_29 helix_70">ruby</span> 
+	<span class="helix_2 helix_48 helix_90">number</span> 
+	<span class="helix_2 helix_95 helix_74 helix_36 helix_49">of</span> 
+	<span class="helix_11 helix_81">don't</span> 
+	<span class="helix_3 helix_78 helix_99">like</span> 
+	<span class="helix_2 helix_26">things</span> 
+	<span class="helix_79 helix_36">this</span> 
+	<span class="helix_2 helix_84 helix_10 helix_24 helix_42">going</span> 
+	<span class="helix_2 helix_62">on</span> 
+	<span class="helix_2 helix_82 helix_99">in</span> 
+	<span class="helix_3 helix_95 helix_52">writing</span> 
+	<span class="helix_2 helix_3 helix_37 helix_80 helix_22 helix_27">my</span> 
+	<span class="helix_82">friday</span> 
+	<span class="helix_17 helix_22 helix_38">i'm</span> 
+	<span class="helix_3 helix_10">thoughts</span> 
+	<span class="helix_2 helix_90 helix_28 helix_81">head</span> 
+	<span class="helix_3 helix_95 helix_48">down</span> 
+	<span class="helix_3 helix_45">-</span> 
+	<span class="helix_11 helix_85 helix_9 helix_54">know</span> 
+	<span class="helix_5 helix_48">an</span> 
+	<span class="helix_3 helix_39">it</span> 
+	<span class="helix_23 helix_92">my</span> 
+	<span class="helix_3 helix_74 helix_12 helix_63">helps</span> 
+	<span class="helix_5 helix_24">idea</span> 
+	<span class="helix_3 helix_80 helix_9 helix_88 helix_56">me</span> 
+	<span class="helix_11 helix_47 helix_14 helix_1">what</span> 
+	<span class="helix_5 helix_1">!</span> 
+	<span class="helix_66 helix_98">syncopated</span> 
+	<span class="helix_7 helix_52 helix_25 helix_40">control</span> 
+	<span class="helix_58">rowing</span> 
+	<span class="helix_19 helix_1 helix_91 helix_39 helix_46">wonder</span> 
+	<span class="helix_3 helix_0 helix_98">think</span> 
+	<span class="helix_7 helix_99 helix_24 helix_27">by</span> 
+	<span class="helix_68">hope</span> 
+	<span class="helix_7 helix_66">pushing</span> 
+	<span class="helix_23 helix_93 helix_62 helix_28">head</span> 
+	<span class="helix_23 helix_54 helix_93 helix_91 helix_39">hurts</span> 
+	<span class="helix_7 helix_27">patterns</span> 
+	<span class="helix_7 helix_12">onto</span> 
+	<span class="helix_7 helix_4">a</span> 
+	<span class="helix_7 helix_96 helix_64">chaotic</span> 
+	<span class="helix_11 helix_85">i'd</span> 
+	<span class="helix_7 helix_25 helix_66 helix_58">system</span> 
+	<span class="helix_13 helix_44 helix_80 helix_68">distracted</span> 
+	<span class="helix_11 helix_53 helix_67 helix_12 helix_6 helix_81 helix_42">do</span> 
+	<span class="helix_41 helix_51 helix_0">looking</span> 
+	<span class="helix_11 helix_98 helix_69">without</span> 
+	<span class="helix_19 helix_0 helix_98 helix_4">if</span> 
+	<span class="helix_13 helix_22">easily</span> 
+	<span class="helix_11 helix_0">my</span> 
+	<span class="helix_11 helix_87 helix_55">sharp</span> 
+	<span class="helix_17 helix_55">supposed</span> 
+	<span class="helix_79 helix_26 helix_25 helix_12 helix_76">is</span> 
+	<span class="helix_11 helix_14 helix_90">brain</span> 
+	<span class="helix_17 helix_57 helix_93 helix_84">to</span> 
+	<span class="helix_19 helix_81">anyone</span> 
+	<span class="helix_59 helix_65 helix_57 helix_38">lot</span> 
+	<span class="helix_17 helix_85 helix_10">be</span> 
+	<span class="helix_23 helix_80">from</span> 
+	<span class="helix_23 helix_76 helix_46 helix_33 helix_63">the</span> 
+	<span class="helix_23 helix_52 helix_76 helix_20 helix_28">migraine</span> 
+	<span class="helix_29 helix_92">is</span> 
+	<span class="helix_29 helix_68 helix_63 helix_33">a</span> 
+	<span class="helix_17 helix_6">revising</span> 
+	<span class="helix_31 helix_16">drum</span> 
+	<span class="helix_29 helix_86 helix_38 helix_75">very</span> 
+	<span class="helix_17 helix_56 helix_1">)</span> 
+	<span class="helix_29 helix_42">exciting</span> 
+	<span class="helix_92 helix_94">you</span> 
+	<span class="helix_19 helix_76 helix_91 helix_42">will</span> 
+	<span class="helix_29 helix_12 helix_57 helix_65 helix_87">programming</span> 
+	<span class="helix_31 helix_82">and</span> 
+	<span class="helix_41 helix_9 helix_98 helix_68 helix_25">for</span> 
+	<span class="helix_29 helix_88 helix_76 helix_54">language</span> 
+	<span class="helix_19 helix_78 helix_52">like</span> 
+	<span class="helix_19 helix_61 helix_50 helix_64 helix_98">this</span> 
+	<span class="helix_31 helix_92 helix_4 helix_60 helix_38">bass</span> 
+	<span class="helix_73 helix_99">who</span> 
+	<span class="helix_31 helix_96 helix_8 helix_63 helix_22">is</span> 
+	<span class="helix_52 helix_93 helix_63 helix_69">intriguing</span> 
+	<span class="helix_47 helix_0 helix_16 helix_34 helix_38">happens</span> 
+	<span class="helix_37 helix_85 helix_90 helix_57">girlfriend</span> 
+	<span class="helix_31 helix_65 helix_46 helix_54">a</span> 
+	<span class="helix_97 helix_46 helix_20">pretentious</span> 
+	<span class="helix_61 helix_99 helix_65 helix_60">beat</span> 
+	<span class="helix_73 helix_68 helix_20 helix_72 helix_25">are</span> 
+	<span class="helix_31 helix_8 helix_86">fantastic</span> 
+	<span class="helix_89 helix_21 helix_22 helix_27 helix_30">miss</span> 
+	<span class="helix_31 helix_27">genre</span> 
+	<span class="helix_41 helix_72 helix_38 helix_39">meaning</span> 
+	<span class="helix_47 helix_39">when</span> 
+	<span class="helix_79 helix_81 helix_94 helix_85">my</span> 
+	<span class="helix_41 helix_6 helix_38 helix_35 helix_10">in</span> 
+	<span class="helix_43 helix_61 helix_26 helix_85 helix_22">is</span> 
+	<span class="helix_61 helix_52 helix_62 helix_48 helix_88">uplifting</span> 
+	<span class="helix_41 helix_98">this</span> 
+	<span class="helix_41 helix_51">aren't</span> 
+	<span class="helix_41 helix_73 helix_52">you</span> 
+	<span class="helix_43 helix_1 helix_9 helix_64">there</span> 
+	<span class="helix_43 helix_38 helix_22 helix_60 helix_27">a</span> 
+	<span class="helix_43 helix_6 helix_56">reason</span> 
+	<span class="helix_43 helix_68 helix_8 helix_99 helix_27">we</span> 
+	<span class="helix_71 helix_93 helix_84 helix_18 helix_54">being</span> 
+	<span class="helix_43 helix_10">search</span> 
+	<span class="helix_39">ridiculous</span> 
+	<span class="helix_43 helix_39 helix_80">for</span> 
+	<span class="helix_43 helix_79 helix_36">meaning</span> 
+	<span class="helix_43 helix_79 helix_85">in</span> 
+	<span class="helix_43 helix_54 helix_30 helix_6 helix_42">everything</span> 
+	<span class="helix_99 helix_34 helix_24">enjoy</span> 
+	<span class="helix_43 helix_65 helix_60 helix_10">we</span> 
+	<span class="helix_59 helix_10 helix_94 helix_75">of</span> 
+	<span class="helix_71 helix_82 helix_42 helix_75">impulsive</span> 
+	<span class="helix_43 helix_49">do</span> 
+	<span class="helix_78 helix_80 helix_56 helix_8">decision time</span> 
+	<span class="helix_79 helix_84 helix_75 helix_96">chaos</span> 
+	<span class="helix_43 helix_97 helix_63">?</span> 
+	<span class="helix_47 helix_53 helix_67 helix_97 helix_66">i</span> 
+	<span class="helix_83 helix_64 helix_46 helix_38">one</span> 
+	<span class="helix_47 helix_68">die</span> 
+	<span class="helix_1">collection</span> 
+	<span class="helix_89 helix_96">those</span> 
+	<span class="helix_59 helix_58">questions</span> 
+	<span class="helix_53 helix_22 helix_25 helix_68 helix_70">matter</span> 
+	<span class="helix_59 helix_69 helix_15">don't</span> 
+	<span class="helix_89 helix_93 helix_44">days</span> 
+	<span class="helix_36 helix_1 helix_40 helix_58">japanese</span> 
+	<span class="helix_59 helix_88 helix_39 helix_4 helix_85">i</span> 
+	<span class="helix_83 helix_88 helix_9">day</span> 
+	<span class="helix_67 helix_84 helix_95">care</span> 
+	<span class="helix_97 helix_63 helix_64 helix_44 helix_49">hope</span> 
+	<span class="helix_83 helix_14 helix_50">i</span> 
+	<span class="helix_59 helix_27 helix_58 helix_8">!</span> 
+	<span class="helix_47 helix_53 helix_67 helix_78">?</span> 
+	<span class="helix_97 helix_78 helix_46 helix_27 helix_50">not</span> 
+	<span class="helix_93 helix_35 helix_74">this</span> 
+	<span class="helix_97 helix_4 helix_54 helix_86">-</span> 
+	<span class="helix_83 helix_36 helix_54">will</span> 
+	<span class="helix_83 helix_51 helix_55 helix_90 helix_72">do</span> 
+	<span class="helix_97 helix_74 helix_87 helix_16 helix_1">annoying</span> 
+	<span class="helix_83 helix_55">something</span> 
+	<span class="helix_97 helix_92 helix_60 helix_38">?</span> 
+	<span class="helix_97 helix_24 helix_12">probably</span> 
+	<span class="helix_83 helix_96 helix_57">great</span>
+	<a id="cy" href="http://poetry.byJP.me/">Cy Densham</a>
+</div>
+<div id="licence"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" title="Licenced inder Create Commons Attribution, Noncommercial, Share Alike 3.0"><img alt="Creative Commons" style="border-width:0" src="/cc.png" /> <img alt="Attribution" style="border-width:0" src="/by.png" /> <img alt="Non-Commercial" style="border-width:0" src="/nc.png" /> <img alt="Share-Alike" style="border-width:0" src="/sa.png" /></a></div>
+<!--<div id="flattr">
+	<script src="http://api.flattr.com/button/load.js" type="text/javascript"></script>
+</div>-->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8873620-2");
+pageTracker._setDomainName(".byjp.me");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
