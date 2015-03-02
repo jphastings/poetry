@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set("UTC");
 if (!isset($_GET['others']) and !isset($_GET['author'])) {
 	$_GET['author'] = "Densham";
 }
@@ -57,7 +58,7 @@ if (file_exists("poems/{$_GET['poem']}.poem")) {
 				$pos = strpos($poem,"\n");
 				list($title,$author) = explode(" - ",substr($poem,0,$pos));
 				$name = explode(" ",$author);
-				if (strtolower(end($name)) == strtolower($_GET['author'])) {
+				if (strtolower(end($name)) == strtolower($_GET['author']) && !$oneauthor) {
 					$oneauthor = $author;
 				}
 				$poems[$author][$title] = $path['filename'];
@@ -69,6 +70,7 @@ if (file_exists("poems/{$_GET['poem']}.poem")) {
 	
 	$page['title'] = "Selected Poetry";
 	if (!empty($oneauthor)) {
+		$author = $oneauthor;
 		$page['title'] .= " by $author";
 		$poems = array($author => $poems[$author]);
 	}
